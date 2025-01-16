@@ -8,4 +8,7 @@ router.get('/', charactersController.index)
 // show
 router.get('/:id', charactersController.show)
 
+// store
+router.post('/', charactersController.store)
+
 module.exports = router

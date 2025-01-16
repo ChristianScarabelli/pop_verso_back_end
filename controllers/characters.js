@@ -39,4 +39,53 @@ function show(req, res) {
     })
 }
 
-module.exports = { index, show }
+// funzione rotta store => inserire un nuovo elemento 
+function store(req, res) {
+
+    console.log("Payload ricevuto dal client:", req.body)
+
+    // recupero l'id del path
+    const id = req.params
+
+    // recupero i dati dalla req
+    const { name, age, shadow, description } = req.body
+
+    console.log(req.body)
+
+    // // validazione
+    // let errors = []
+
+    // if (!name || typeof name !== 'string' || name.trim().length > 255 || name.trim().length === 0) {
+    //     errors.push('Name is required')
+    // }
+
+    // if (!age || typeof age !== 'number' || age < 0) {
+    //     errors.push('Age is required and must be a number')
+    // }
+
+    // if (!shadow || typeof shadow !== 'number') {
+    //     errors.push('Shadow is required')
+    // }
+
+    // if (!description || typeof description !== 'string' || description.trim().length === 0) {
+    //     errors.push('Description is required')
+    // }
+
+    // // se ci sono errori invio la risposta e termino l'esecuzuone 
+    // if (errors) {
+    //     console.log("Errori di validazione:", errors)
+    //     res.status(400).json({ errors })
+    //     return
+}
+
+// query
+const sql = `INSERT INTO characters (name, age, shadow, description) VALUES ( ?, ?, ?, ?)`
+
+connection.query(sql, [name, age, shadow, description], (err, result) => {
+    if (err) return res.status(500).json({ error: 'databse query failed' })
+    console.log("Personaggio aggiunto, ID:", result.insertId)
+    res.status(201).json({ message: 'Added to database' })
+})
+}
+
+module.exports = { index, show, store }
