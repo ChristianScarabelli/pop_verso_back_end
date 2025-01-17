@@ -76,16 +76,16 @@ function store(req, res) {
     //     console.log("Errori di validazione:", errors)
     //     res.status(400).json({ errors })
     //     return
+
+    // query
+    const sql = `INSERT INTO characters (name, age, shadow, description) VALUES ( ?, ?, ?, ?)`
+
+    connection.query(sql, [name, age, shadow, description], (err, result) => {
+        if (err) return res.status(500).json({ error: 'databse query failed' })
+        console.log("Personaggio aggiunto, ID:", result.insertId)
+        res.status(201).json({ message: 'Added to database' })
+    })
 }
 
-// query
-const sql = `INSERT INTO characters (name, age, shadow, description) VALUES ( ?, ?, ?, ?)`
-
-connection.query(sql, [name, age, shadow, description], (err, result) => {
-    if (err) return res.status(500).json({ error: 'databse query failed' })
-    console.log("Personaggio aggiunto, ID:", result.insertId)
-    res.status(201).json({ message: 'Added to database' })
-})
-}
 
 module.exports = { index, show, store }
