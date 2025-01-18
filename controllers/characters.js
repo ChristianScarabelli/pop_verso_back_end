@@ -92,5 +92,19 @@ function store(req, res) {
     })
 }
 
+// funzione rotta destroy => eliminare un elemento 
+function destroy(req, res) {
+    const id = req.params.id
 
-module.exports = { index, show, store }
+    // query
+    const sql = `DELETE FROM characters WHERE id = ?`
+
+    connection.query(sql, [id], (err, result) => {
+        if (err) return res.status(500).json({ error: 'database query failed' })
+        if (result.affectedRows === 0) return res.status(404).json({ error: 'data not found' })
+        res.sendStatus(204)
+    })
+}
+
+
+module.exports = { index, show, store, destroy }

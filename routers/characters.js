@@ -11,4 +11,7 @@ router.get('/:id', charactersController.show)
 // store
 router.post('/', charactersController.store)
 
+// destroy
+router.delete('/:id', charactersController.destroy)
+
 module.exports = router
