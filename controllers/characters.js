@@ -6,7 +6,12 @@ function index(req, res) {
     console.log('elenco dei personaggi')
 
     // creo la query
-    const sql = `SELECT * FROM characters`
+    let sql = `SELECT * FROM characters`
+
+    // concateno per filtrare risultati con search bar
+    if (req.query.search) {
+        sql += ` WHERE name LIKE '%${req.query.search}%'`
+    }
 
     // uso la query con connection(connessione al db), con la funzione query(), 
     // che accetta la query creata e una callback per gestire risposta ed errore, ed eventuale parametro dinamico (come l'id)
